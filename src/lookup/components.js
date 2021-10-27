@@ -1,6 +1,6 @@
 import axios from "axios"
 
-//const url = "localhost:8080"
+//const url = "esumerce.herokuapp.com/v1/user"
 
 export class ApiLookup{
 
