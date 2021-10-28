@@ -1,5 +1,5 @@
 import React, { useRef, useState } from "react";
-import {  Link } from "react-router-dom";
+import { /*useHistory,*/ Link } from "react-router-dom";
 import {  getUserIdByEmail } from "../services/UserAPI";
 import axios from "axios";
 import "../css/signin.css";
@@ -20,7 +20,10 @@ const LandingPage = () => {
   //const { currentUser } = useAuth();
   //const { signup } = useAuth();
   //const { login } = useAuth();
-  const [ setError] = useState("");
+
+  /*Manejador de errores*/
+  const [error, setError] = useState("");
+
   const [loading, setLoading] = useState(false);
 
   const signUpButton = () => {
@@ -35,7 +38,9 @@ const LandingPage = () => {
 
   const signInEvent = async () => {
     try {
+      error();
       setError("");
+      
       setLoading(true);
 
       //await login(
@@ -81,7 +86,7 @@ const LandingPage = () => {
         })
         .then((response) => {
           console.log(response);
-          
+
           swal({
             title: "Crear Nueva Cuenta",
             text: "Se cuenta ha sido creada.",
@@ -104,7 +109,7 @@ const LandingPage = () => {
 
           setLoading(false);
         });
-      
+
     } catch (error) {
       swal({
         title: "Crear Nueva Cuenta",
@@ -114,7 +119,7 @@ const LandingPage = () => {
       });
     }
 
-   
+
   };
 
   const handleNickname = (e) => {
@@ -147,24 +152,24 @@ const LandingPage = () => {
 
   return (
     <div className="body">
-      <div class="container" id="container" ref={containerRef}>
-        <div class="form-container sign-up-container">
+      <div className="container" id="container" ref={containerRef}>
+        <div className="form-container sign-up-container">
           <div className="form">
             <h1>Crear Nueva Cuenta</h1>
             <input
               required
-              controlId="nickname"
-              class="input"
+              controlid="nickname"
+              className="input"
               type="text"
               placeholder="Nickname"
               value={nicknameSignupRef}
               onChange={handleNickname}
               maxLength="100"
-              
+
             />
             <input
-              controlId="name"
-              class="input"
+              controlid="name"
+              className="input"
               type="text"
               placeholder="Nombre"
               value={nameSignupRef}
@@ -173,8 +178,8 @@ const LandingPage = () => {
               required
             />
              <input
-              controlId="lastName"
-              class="input"
+              controlid="lastName"
+              className="input"
               type="text"
               placeholder="Apellido"
               value={lastNameSignupRef}
@@ -183,8 +188,8 @@ const LandingPage = () => {
               required
             />
             <input
-              controlId="email"
-              class="input"
+              controlid="email"
+              className="input"
               type="email"
               placeholder="Correo Electronico"
               id="Sign-Up-Email"
@@ -194,8 +199,8 @@ const LandingPage = () => {
               required
             />
             <input
-              controlId="password"
-              class="input"
+              controlid="password"
+              className="input"
               type="password"
               placeholder="Contraseña"
               id="Sign-Up-Password"
@@ -206,7 +211,7 @@ const LandingPage = () => {
             />
             <Link to="/">
               <button
-                class="button"
+                className="button"
                 type="submit"
                 disabled={loading}
                 onClick={signupEvent}
@@ -216,25 +221,25 @@ const LandingPage = () => {
             </Link>
           </div>
         </div>
-        <div class="form-container sign-in-container">
+        <div className="form-container sign-in-container">
           <div className="form">
             <h1 className="h1">Inicio de Sesión</h1>
             <input
-              class="input"
+              className="input"
               type="email"
               placeholder="Correo Electronico"
               ref={emailSignInRef}
               required
             />
             <input
-              class="input"
+              className="input"
               type="password"
               placeholder="Contraseña"
               ref={passwordSignInRef}
               required
             />
             <button
-              class="button"
+              className="button"
               type="submit"
               disabled={loading}
               onClick={signInEvent}
@@ -243,25 +248,25 @@ const LandingPage = () => {
             </button>
           </div>
         </div>
-        <div class="overlay-container">
-          <div class="overlay">
-            <div class="overlay-panel overlay-left">
-              <img src={campesino} alt="Campesino"/>
-              <h1 class="h1">¡ Bienvenid@ a E-Sumerce !</h1>
-              <p class="p">
+        <div className="overlay-container">
+          <div className="overlay">
+            <div className="overlay-panel overlay-left">
+              <img src={campesino} alt="Campesino" />
+              <h1 className="h1">¡ Bienvenid@ a E-Sumerce !</h1>
+              <p className="p">
                 Crea una cuenta para ser parte de este gran proyecto!!
               </p>
-              <button class="button ghost" id="signIn" onClick={signInButton}>
+              <button className="button ghost" id="signIn" onClick={signInButton}>
                 Iniciar Sesión
               </button>
             </div>
-            <div class="overlay-panel overlay-right">
-              <img src={campe2} alt="Logo" />
-              <h1 class="h1">Estas de regreso!</h1>
-              <p class="p">
+            <div className="overlay-panel overlay-right">
+              <img src={campe2} alt="logo" />
+              <h1 className="h1">Estas de regreso!</h1>
+              <p className="p">
                 Ingresa tu información y continua participando en E-Sumerce.
               </p>
-              <button class="button ghost" id="signUp" onClick={signUpButton}>
+              <button className="button ghost" id="signUp" onClick={signUpButton}>
                 Crear Cuenta
               </button>
             </div>
