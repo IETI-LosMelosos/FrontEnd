@@ -1,12 +1,30 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import './index.css';
-import App from './App';
 import reportWebVitals from './reportWebVitals';
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route
+} from "react-router-dom";
+import { ShoopingCart } from './shoopingcart';
+import './resources/css/styles.css'
+import { PaymentResponse } from './paymentResponse';
 
 ReactDOM.render(
   <React.StrictMode>
-    <App />
+    <Router>
+      <Switch>
+        <Route path="/paymentResponse">
+          <PaymentResponse/>
+        </Route>
+        <Route path="/shoopingcart">
+          <ShoopingCart/>
+        </Route>
+        <Route>
+          <h1>not found</h1>
+        </Route>
+      </Switch>
+    </Router>
   </React.StrictMode>,
   document.getElementById('root')
 );
