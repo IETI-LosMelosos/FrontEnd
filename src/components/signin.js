@@ -1,5 +1,5 @@
 import React, { useRef, useState } from "react";
-import { useHistory, Link } from "react-router-dom";
+import {  Link } from "react-router-dom";
 import {  getUserIdByEmail } from "../services/UserAPI";
 import axios from "axios";
 import "../css/signin.css";
@@ -16,11 +16,11 @@ const LandingPage = () => {
   const emailSignInRef = useRef();
   const passwordSignInRef = useRef();
   const containerRef = React.createRef();
-  const history = useHistory();
+  //const history = useHistory();
   //const { currentUser } = useAuth();
   //const { signup } = useAuth();
   //const { login } = useAuth();
-  const [error, setError] = useState("");
+  const [ setError] = useState("");
   const [loading, setLoading] = useState(false);
 
   const signUpButton = () => {
@@ -246,7 +246,7 @@ const LandingPage = () => {
         <div class="overlay-container">
           <div class="overlay">
             <div class="overlay-panel overlay-left">
-              <img src={campesino} />
+              <img src={campesino} alt="Campesino"/>
               <h1 class="h1">¡ Bienvenid@ a E-Sumerce !</h1>
               <p class="p">
                 Crea una cuenta para ser parte de este gran proyecto!!
@@ -256,7 +256,7 @@ const LandingPage = () => {
               </button>
             </div>
             <div class="overlay-panel overlay-right">
-              <img src={campe2} />
+              <img src={campe2} alt="Logo" />
               <h1 class="h1">Estas de regreso!</h1>
               <p class="p">
                 Ingresa tu información y continua participando en E-Sumerce.
