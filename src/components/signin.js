@@ -1,11 +1,13 @@
-import React, { useRef, useState } from "react";
+import React, { useState } from "react";
 import { /*useHistory,*/ Link } from "react-router-dom";
-import {  getUserIdByEmail } from "../services/UserAPI";
+//import {  getUserIdByEmail } from "../services/UserAPI";
 import axios from "axios";
 import "../css/signin.css";
 import campe2 from "../images/campe2.png";
 import campesino from "../images/1.png";
 import swal from "sweetalert";
+import { ApiLookup } from "../lookup/components";
+import { useHistory } from "react-router";
 
 const LandingPage = () => {
   const [nicknameSignupRef, setNickname] = useState("");
@@ -13,9 +15,22 @@ const LandingPage = () => {
   const [lastNameSignupRef, setLastName] = useState("");
   const [emailSignupRef, setEmail] = useState("");
   const [passwordSignupRef, setPassword] = useState("");
-  const emailSignInRef = useRef();
-  const passwordSignInRef = useRef();
+  // const emailSignInRef = useRef();
+  //const passwordSignInRef = useRef();
   const containerRef = React.createRef();
+  const history = useHistory();
+  const [email, setEmailLogin] = useState("");
+  const [password, setPaswwordLogin] = useState("");
+
+  const handlePasswordChange = (e) => {
+    const value = e.target.value;
+    setPaswwordLogin(value);
+  };
+
+  const hanldeEmailChange = (e) => {
+    const value = e.target.value;
+    setEmailLogin(value);
+  };
   //const history = useHistory();
   //const { currentUser } = useAuth();
   //const { signup } = useAuth();
@@ -37,89 +52,68 @@ const LandingPage = () => {
   };
 
   const signInEvent = async () => {
-    try {
-      error();
-      setError("");
-      
-      setLoading(true);
+    console.log(error);
+    setError("");
 
-      //await login(
-        //emailSignInRef.current.value,
-       //passwordSignInRef.current.value
-      //);
+    setLoading(true);
 
-      getUserIdByEmail(emailSignInRef.current.value).then((res) =>
-        localStorage.setItem("userId", res)
-      );
+    let loginDto = {
+      email: email,
+      password: password,
+    };
 
-      localStorage.setItem("userEmail", emailSignInRef.current.value);
-
-      //history.push("/siguientePagina");
-    } catch (error) {
-      swal({
-        title: "Iniciar Sesión",
-        icon: "Error",
-        text: "Credenciales invalidas.",
-        button: "Ok",
-        timer: "5000",
-      });
-    }
+    ApiLookup.lookup(
+      "POST",
+      "v1/auth",
+      (data) => {
+        console.log(data);
+        ApiLookup.setCookie(data.data.token);
+        history.push("/dfsdf");
+      },
+      loginDto
+    );
 
     setLoading(false);
   };
 
   const signupEvent = async () => {
-    try {
-      setError("");
-      setLoading(true);
+    setError("");
+    setLoading(true);
 
-      //await signup(emailSignupRef, passwordSignupRef);
+    //await signup(emailSignupRef, passwordSignupRef);
 
-      axios
-        .post("https://esumerce.herokuapp.com/v1/user", 
-        { 
+    axios
+      .post("https://esumerce.herokuapp.com/v1/user", {
         nickname: nicknameSignupRef,
         name: nameSignupRef,
         lastName: lastNameSignupRef,
         email: emailSignupRef,
-        password : passwordSignupRef
-        })
-        .then((response) => {
-          console.log(response);
+        password: passwordSignupRef,
+      })
+      .then((response) => {
+        console.log(response);
 
-          swal({
-            title: "Crear Nueva Cuenta",
-            text: "Se cuenta ha sido creada.",
-            icon: "success",
-            button: "Ok",
-            timer: "10000",
-          });
-          resetFields();
+        swal({
+          title: "Crear Nueva Cuenta",
+          text: "Se cuenta ha sido creada.",
+          icon: "success",
+          button: "Ok",
+          timer: "10000",
+        });
+        resetFields();
+      })
+      .catch((error) => {
+        console.log(`Error: ${error}`);
 
-        })
-        .catch((error) => {
-          console.log(`Error: ${error}`);
-
-          swal({
-            title: "Crear Nueva Cuenta",
-            icon: "error",
-            text: "Error al crear una nueva cuenta",
-            timer: "10000",
-          });
-
-          setLoading(false);
+        swal({
+          title: "Crear Nueva Cuenta",
+          icon: "error",
+          text: "Error al crear una nueva cuenta",
+          timer: "10000",
         });
 
-    } catch (error) {
-      swal({
-        title: "Crear Nueva Cuenta",
-        icon: "error",
-        text: "Error al crear una nueva cuenta",
-        timer: "10000",
+        setLoading(false);
       });
-    }
-
-
   };
 
   const handleNickname = (e) => {
@@ -165,7 +159,6 @@ const LandingPage = () => {
               value={nicknameSignupRef}
               onChange={handleNickname}
               maxLength="100"
-
             />
             <input
               controlid="name"
@@ -177,7 +170,7 @@ const LandingPage = () => {
               maxLength="100"
               required
             />
-             <input
+            <input
               controlid="lastName"
               className="input"
               type="text"
@@ -228,14 +221,18 @@ const LandingPage = () => {
               className="input"
               type="email"
               placeholder="Correo Electronico"
-              ref={emailSignInRef}
+              value={email}
+              //ref={emailSignInRef}
+              onChange={hanldeEmailChange}
               required
             />
             <input
               className="input"
               type="password"
               placeholder="Contraseña"
-              ref={passwordSignInRef}
+              value={password}
+              //ref={passwordSignInRef}
+              onChange={handlePasswordChange}
               required
             />
             <button
@@ -256,7 +253,11 @@ const LandingPage = () => {
               <p className="p">
                 Crea una cuenta para ser parte de este gran proyecto!!
               </p>
-              <button className="button ghost" id="signIn" onClick={signInButton}>
+              <button
+                className="button ghost"
+                id="signIn"
+                onClick={signInButton}
+              >
                 Iniciar Sesión
               </button>
             </div>
@@ -266,7 +267,11 @@ const LandingPage = () => {
               <p className="p">
                 Ingresa tu información y continua participando en E-Sumerce.
               </p>
-              <button className="button ghost" id="signUp" onClick={signUpButton}>
+              <button
+                className="button ghost"
+                id="signUp"
+                onClick={signUpButton}
+              >
                 Crear Cuenta
               </button>
             </div>
