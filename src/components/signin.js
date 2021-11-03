@@ -7,7 +7,7 @@ import campe2 from "../images/campe2.png";
 import campesino from "../images/1.png";
 import swal from "sweetalert";
 import { ApiLookup } from "../lookup/components";
-import { useHistory } from "react-router";
+//import { useHistory } from "react-router";
 
 const LandingPage = () => {
   const [nicknameSignupRef, setNickname] = useState("");
@@ -18,7 +18,7 @@ const LandingPage = () => {
   // const emailSignInRef = useRef();
   //const passwordSignInRef = useRef();
   const containerRef = React.createRef();
-  const history = useHistory();
+
   const [email, setEmailLogin] = useState("");
   const [password, setPaswwordLogin] = useState("");
 
@@ -62,16 +62,7 @@ const LandingPage = () => {
       password: password,
     };
 
-    ApiLookup.lookup(
-      "POST",
-      "v1/auth",
-      (data) => {
-        console.log(data);
-        ApiLookup.setCookie(data.data.token);
-        history.push("/dfsdf");
-      },
-      loginDto
-    );
+    ApiLookup.login(loginDto);
 
     setLoading(false);
   };
