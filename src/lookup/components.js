@@ -25,3 +25,16 @@ export class ApiLookup{
         })
     }
 }
+
+export class ShoopingCartStorage{
+    static getShoopingCart(){
+        if(localStorage.getItem('products')){
+            return JSON.parse(localStorage.getItem('products'))
+        }
+        return []
+    }
+
+    static saveShoopingCart(items){
+        localStorage.setItem('products',JSON.stringify(items))
+    }
+}

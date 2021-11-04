@@ -1,6 +1,9 @@
 import React, { useEffect, useState } from "react";
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
+import Button from '@mui/material/Button';
+import DeleteIcon from '@mui/icons-material/Delete';
+import { IconButton, Typography } from "@mui/material";
 
 export function numberWithCommas(x) {
     if(x){
@@ -13,10 +16,18 @@ function Product(props){
     const {item} = props
     return <Card className="card mt-3">
         <CardContent>
-            <span className="seller">{item.name}<br></br>{item.seller}</span>
-            <span className="quantity">{numberWithCommas(item.quantity)} Kilos</span>
-            <span className="price">{numberWithCommas(item.price)}</span>
-            <button type="button" className="delete btn btn-danger">Eliminar</button>
+            <Typography sx={{fontSize: 'min(5vw,20px)'}} mr={2} gutterBottom component="span">
+                {item.name} {item.seller}
+            </Typography>
+            <Typography sx={{fontSize: 'min(5vw,20px)'}} mr={2} gutterBottom component="span">
+                {numberWithCommas(item.quantity)}
+            </Typography>
+            <Typography sx={{fontSize: 'min(5vw,20px)'}} mr={5} gutterBottom component="span">
+                {numberWithCommas(item.price)}
+            </Typography>
+            <IconButton aria-label="delete">
+                <DeleteIcon sx={{width: 'max(4vw,30px)',height:'max(4vw,30px)'}}/>
+            </IconButton>
         </CardContent>
     </Card>
 }
@@ -29,11 +40,10 @@ export function ShoopingCart(){
     const handleBuyButton = (event)=>{
         event.preventDefault()
         var handler = window.ePayco.checkout.configure({
-            key:'03dd03c61820d0dd34393b2d0ebe3951',
+            key:'70539675f9625b26ffc9985821c76e19',
             test:true
         })
         handler.open({
-            key:'03dd03c61820d0dd34393b2d0ebe3951',
             name: "ESumerce",
             description: "ESumerce",
             invoice: "1234",
@@ -67,8 +77,13 @@ export function ShoopingCart(){
             {products.map((item,index)=>{
                 return <Product key={index} item={item}/>
             })}
-            <h1 className="totalPrice">{numberWithCommas(total)}</h1>
-            <button type="button" className="buyButton btn btn-success mt-5" onClick={handleBuyButton}>Comprar</button>
+
+            <Typography sx={{fontSize:"min(5vw,40px)"}} mt={5}>
+                Total: {numberWithCommas(total)}
+            </Typography>
+            <Button sx={{maxWidth: '90%',marginTop:'50px'}} size="large" variant="contained" color="success" onClick={handleBuyButton}>
+                <Typography sx={{fontSize: 'max(2vw,20px)'}}>Comprar</Typography>
+            </Button>
         </div>
     </div>
 }
