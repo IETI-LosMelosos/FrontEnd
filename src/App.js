@@ -4,6 +4,7 @@ import LandingPage from "./components/signin";
 import {CitySelect,MainPage} from './pages'
 import {PaymentResponse} from './paymentResponse'
 import {ShoopingCart} from './shoopingcart'
+import './resources/css/styles.css'
 
 function App() {
   return (
