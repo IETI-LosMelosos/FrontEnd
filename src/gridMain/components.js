@@ -5,7 +5,7 @@ function Square(props) {
 
   const handleClick = (event) => {
     event.preventDefault();
-    window.location.pathname= "/" + event.target.dataset.link
+    window.location.pathname= "/" + event.target.dataset.link;
   };
 
   return (
