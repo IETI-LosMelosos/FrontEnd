@@ -1,7 +1,5 @@
 import axios from "axios";
 import swal from "sweetalert";
-//const url = "esumerce.herokuapp.com/v1/user"
-//import { useHistory } from "react-router";
 const BASE_URL = "https://esumerce.herokuapp.com/";
 
 export class ApiLookup {
@@ -22,9 +20,9 @@ export class ApiLookup {
         return c.substring(name.length, c.length);
       }
     }
-    return "";
+    return ""
   }
-  
+
   static lookup(method, endpoint, callback, data) {
     const headers = {
       "Content-Type": "application/json",
@@ -69,4 +67,18 @@ export class ApiLookup {
 
     this.lookup("POST", "v1/auth", callback, data);
   }
+}
+
+
+export class ShoopingCartStorage{
+    static getShoopingCart(){
+        if(localStorage.getItem('products')){
+            return JSON.parse(localStorage.getItem('products'))
+        }
+        return []
+    }
+
+    static saveShoopingCart(items){
+        localStorage.setItem('products',JSON.stringify(items))
+    }
 }

@@ -1,0 +1,26 @@
+.shoopingCart{
+    text-align: center;
+    .totalPrice{
+        margin-top: 10px;
+    }
+    .buyButton{
+        width: calc(100% - 20px);
+    }
+    .card{
+        width: calc(100% - 20px);
+        .seller{
+            display: inline-block;
+        }
+        .quantity{
+            margin-left: 20px;
+            display: inline-block;
+        }
+        .price{
+            margin-left: 20px;
+            display: inline-block;
+        }
+        .delete{
+            margin-left: 20px;
+        }
+    }
+}
