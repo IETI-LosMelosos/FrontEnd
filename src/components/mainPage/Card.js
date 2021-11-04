@@ -2,8 +2,8 @@ import React from "react";
 import PropTypes from "prop-types";
 import "./card.css";
 
-
 function Card({ imageSource, name, price, description, producedBy }) {
+
   return (
     <div className="card text-center animate__animated animate__fadeInUp">
       <div className="overflow">
@@ -13,10 +13,6 @@ function Card({ imageSource, name, price, description, producedBy }) {
         <h4>{name}</h4>
         <h5>{price}</h5>
         <p>{description}</p>
-        <p>{producedBy}</p>
-        <br/>
-        <button>Agregar</button>
-        <br/>
       </div>
     </div>
   );
