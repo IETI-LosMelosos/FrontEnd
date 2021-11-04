@@ -1,7 +1,7 @@
 import React from "react";
 import {  BrowserRouter as Router,Switch, Route } from "react-router-dom";
 import LandingPage from "./components/signin";
-import {CitySelect,MainPage} from './pages'
+import {CitySelect,MainPage,AboutUs} from './pages'
 import {PaymentResponse} from './paymentResponse'
 import {ShoopingCart} from './shoopingcart'
 import './resources/css/styles.css'
@@ -22,6 +22,9 @@ function App() {
         </Route>
         <Route exact path="/shoopingcart">
           <ShoopingCart/>
+        </Route>
+        <Route exact path="/about">
+          <AboutUs/>
         </Route>
         <Route>
           <h1>not found</h1>
