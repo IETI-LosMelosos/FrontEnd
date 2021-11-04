@@ -1,27 +1,11 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import reportWebVitals from './reportWebVitals';
-import {
-  BrowserRouter as Router,
-  Switch,
-  Route,
-} from "react-router-dom";
-
-import {CitySelect, MainPage} from './pages';
+import App from './components/App'
 
 ReactDOM.render(
   <React.StrictMode>
-    <Router>
-      <Switch>
-        <Route path="/citySelect">
-          <CitySelect/>
-        </Route>
-
-        <Route path="/">
-          <MainPage />
-        </Route>
-      </Switch>
-    </Router>
+    <App/>
   </React.StrictMode>,
   document.getElementById('root')
 );

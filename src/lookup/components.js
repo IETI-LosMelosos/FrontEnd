@@ -1,27 +1,72 @@
-import axios from "axios"
+import axios from "axios";
+import swal from "sweetalert";
+//const url = "esumerce.herokuapp.com/v1/user"
+//import { useHistory } from "react-router";
+const BASE_URL = "https://esumerce.herokuapp.com/";
 
-//const url = "localhost:8080"
+export class ApiLookup {
+  static setCookie(cname, cvalue) {
+    document.cookie = cname + "=" + cvalue + ";path=/";
+  }
 
-export class ApiLookup{
-
-    static axiosLookup(method,endpoint,callback,data){
-        const auth = null
-        const headers = auth?{
-            "Content-Type":"application/json",
-            "Authorization":auth
-        }:{
-            "Content-Type":"application/json"
-        }
-        axios({
-            method:method,
-            url: endpoint,
-            headers:headers,
-            data
-        }).then(response=>{
-            callback(response.data,response.status)
-        }).catch((err)=>{
-            callback({detail:"Error"},400)
-            console.log(err)
-        })
+  static getCookie(cname) {
+    let name = cname + "=";
+    let decodedCookie = decodeURIComponent(document.cookie);
+    let ca = decodedCookie.split(";");
+    for (let i = 0; i < ca.length; i++) {
+      let c = ca[i];
+      while (c.charAt(0) === " ") {
+        c = c.substring(1);
+      }
+      if (c.indexOf(name) === 0) {
+        return c.substring(name.length, c.length);
+      }
     }
+    return "";
+  }
+  
+  static lookup(method, endpoint, callback, data) {
+    const headers = {
+      "Content-Type": "application/json",
+      Authorization: "Bearer " + this.getCookie("token")
+    };
+    axios({
+      method: method,
+      headers: headers,
+      url: BASE_URL + endpoint,
+      data
+    })
+    .then((data)=>{
+      callback(data)
+    })
+    .catch((err)=>{
+      callback(err)
+    })
+  }
+
+  static login(data) {
+    const callback = (data) => {
+      if (data.status === 200) {
+        this.setCookie('login',data.data.token);
+        swal({
+          title: "Iniciar sesion",
+          text: "Sesion Exitosa.",
+          icon: "success",
+          button: "Ok",
+          timer: "500",
+        });
+        window.location.pathname="/algo"
+      } else {
+        swal({
+          title: "Iniciar Sesión",
+          icon: "error",
+          text: "Credenciales invalidas.",
+          button: "Ok",
+          timer: "5000",
+        });
+      }
+    };
+
+    this.lookup("POST", "v1/auth", callback, data);
+  }
 }
