@@ -1,19 +1,19 @@
 import React from "react";
 import {  BrowserRouter as Router,Switch, Route } from "react-router-dom";
 import LandingPage from "./signin";
-
+import {CitySelect,MainPage} from '../pages'
 
 function App() {
   return (
     <Router>
       <Switch>
-        <Route path="/citySelect">
+        <Route exact path="/citySelect">
           <CitySelect/>
         </Route>
-        <Route path="/">
+        <Route exact path="/login" component={LandingPage} />
+        <Route exact path="/">
           <MainPage />
         </Route>
-        <Route exact path="/login" component={LandingPage} />
       </Switch>
     </Router>
   );
