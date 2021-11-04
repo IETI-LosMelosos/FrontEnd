@@ -2,6 +2,8 @@ import axios from "axios";
 import swal from "sweetalert";
 //const url = "esumerce.herokuapp.com/v1/user"
 //import { useHistory } from "react-router";
+const BASE_URL = "https://esumerce.herokuapp.com/";
+
 export class ApiLookup {
   static setCookie(cname, cvalue) {
     document.cookie = cname + "=" + cvalue + ";path=/";
@@ -22,38 +24,30 @@ export class ApiLookup {
     }
     return "";
   }
-  //method = GET / POST / PUT
+  
   static lookup(method, endpoint, callback, data) {
     const headers = {
       "Content-Type": "application/json",
-      Authentication: "Bearer " + this.getCookie("token"),
-      "Access-Control-Allow-Origin": "*",
+      Authorization: "Bearer " + this.getCookie("token")
     };
-
-    const BASE_URL = "https://esumerce.herokuapp.com/";
-
-    console.log(data);
-
     axios({
       method: method,
       headers: headers,
       url: BASE_URL + endpoint,
-      data: data,
+      data
     })
-      .then((data) => {
-        callback(data);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+    .then((data)=>{
+      callback(data)
+    })
+    .catch((err)=>{
+      callback(err)
+    })
   }
 
   static login(data) {
     const callback = (data) => {
-      console.log(data);
-      this.setCookie(data.data.token);
-      console.log(data.status);
       if (data.status === 200) {
+        this.setCookie('login',data.data.token);
         swal({
           title: "Iniciar sesion",
           text: "Sesion Exitosa.",
@@ -61,7 +55,7 @@ export class ApiLookup {
           button: "Ok",
           timer: "500",
         });
-        //window.history.pushState("/das")
+        window.location.pathname="/algo"
       } else {
         swal({
           title: "Iniciar Sesión",
