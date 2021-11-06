@@ -50,10 +50,12 @@ export class ApiLookup {
           title: "Iniciar sesion",
           text: "Sesion Exitosa.",
           icon: "success",
-          button: "Ok",
-          timer: "500",
+          button: "Ok"
+        }).then((value)=>{
+          if(value){
+            window.location.pathname="/algo"
+          }
         });
-        window.location.pathname="/algo"
       } else {
         swal({
           title: "Iniciar Sesión",
@@ -64,8 +66,11 @@ export class ApiLookup {
         });
       }
     };
-
     this.lookup("POST", "v1/auth", callback, data);
+  }
+
+  static register(callback,data){
+    this.lookup("POST","v1/user",callback,data)
   }
 }
 

@@ -1,13 +1,9 @@
 import React, { useState } from "react";
-import { /*useHistory,*/ Link } from "react-router-dom";
-//import {  getUserIdByEmail } from "../services/UserAPI";
-import axios from "axios";
 import "../css/signin.css";
 import campe2 from "../images/campe2.png";
 import campesino from "../images/1.png";
-import swal from "sweetalert";
 import { ApiLookup } from "../lookup/components";
-//import { useHistory } from "react-router";
+import swal from "sweetalert";
 
 const LandingPage = () => {
   const [nicknameSignupRef, setNickname] = useState("");
@@ -15,8 +11,6 @@ const LandingPage = () => {
   const [lastNameSignupRef, setLastName] = useState("");
   const [emailSignupRef, setEmail] = useState("");
   const [passwordSignupRef, setPassword] = useState("");
-  // const emailSignInRef = useRef();
-  //const passwordSignInRef = useRef();
   const containerRef = React.createRef();
 
   const [email, setEmailLogin] = useState("");
@@ -31,13 +25,7 @@ const LandingPage = () => {
     const value = e.target.value;
     setEmailLogin(value);
   };
-  //const history = useHistory();
-  //const { currentUser } = useAuth();
-  //const { signup } = useAuth();
-  //const { login } = useAuth();
-
-  /*Manejador de errores*/
-  const [error, setError] = useState("");
+ 
 
   const [loading, setLoading] = useState(false);
 
@@ -51,9 +39,8 @@ const LandingPage = () => {
     containerNode.classList.remove("right-panel-active");
   };
 
-  const signInEvent = async () => {
-    console.log(error);
-    setError("");
+  const signInEvent = (event) => {
+    event.preventDefault()
 
     setLoading(true);
 
@@ -67,23 +54,12 @@ const LandingPage = () => {
     setLoading(false);
   };
 
-  const signupEvent = async () => {
-    setError("");
+  const signupEvent = (event) => {
+    event.preventDefault()
     setLoading(true);
-
-    //await signup(emailSignupRef, passwordSignupRef);
-
-    axios
-      .post("https://esumerce.herokuapp.com/v1/user", {
-        nickname: nicknameSignupRef,
-        name: nameSignupRef,
-        lastName: lastNameSignupRef,
-        email: emailSignupRef,
-        password: passwordSignupRef,
-      })
-      .then((response) => {
-        console.log(response);
-
+    const callback = (data)=>{
+      if(data.status===200){
+        resetFields()
         swal({
           title: "Crear Nueva Cuenta",
           text: "Se cuenta ha sido creada.",
@@ -91,20 +67,22 @@ const LandingPage = () => {
           button: "Ok",
           timer: "10000",
         });
-        resetFields();
-      })
-      .catch((error) => {
-        console.log(`Error: ${error}`);
-
+      }else{
         swal({
           title: "Crear Nueva Cuenta",
           icon: "error",
           text: "Error al crear una nueva cuenta",
           timer: "10000",
         });
-
-        setLoading(false);
-      });
+      }
+    }
+    ApiLookup.register(callback,{
+      nickname: nicknameSignupRef,
+      name: nameSignupRef,
+      lastName: lastNameSignupRef,
+      email: emailSignupRef,
+      password: passwordSignupRef,
+    })
   };
 
   const handleNickname = (e) => {
@@ -136,104 +114,104 @@ const LandingPage = () => {
   };
 
   return (
-    <div className="body">
-      <div className="container" id="container" ref={containerRef}>
+    <div className="bodyLogin">
+      <div className="containerLogin" id="container" ref={containerRef}>
         <div className="form-container sign-up-container">
           <div className="form">
             <h1>Crear Nueva Cuenta</h1>
-            <input
-              required
-              controlid="nickname"
-              className="input"
-              type="text"
-              placeholder="Nickname"
-              value={nicknameSignupRef}
-              onChange={handleNickname}
-              maxLength="100"
-            />
-            <input
-              controlid="name"
-              className="input"
-              type="text"
-              placeholder="Nombre"
-              value={nameSignupRef}
-              onChange={handleName}
-              maxLength="100"
-              required
-            />
-            <input
-              controlid="lastName"
-              className="input"
-              type="text"
-              placeholder="Apellido"
-              value={lastNameSignupRef}
-              onChange={handleLastName}
-              maxLength="100"
-              required
-            />
-            <input
-              controlid="email"
-              className="input"
-              type="email"
-              placeholder="Correo Electronico"
-              id="Sign-Up-Email"
-              value={emailSignupRef}
-              onChange={handleEmail}
-              maxLength="100"
-              required
-            />
-            <input
-              controlid="password"
-              className="input"
-              type="password"
-              placeholder="Contraseña"
-              id="Sign-Up-Password"
-              value={passwordSignupRef}
-              onChange={handlePassword}
-              minLength="6"
-              required
-            />
-            <Link to="/">
+            <form onSubmit={signupEvent}>
+              <input
+                required
+                controlid="nickname"
+                className="input"
+                type="text"
+                placeholder="Nickname"
+                value={nicknameSignupRef}
+                onChange={handleNickname}
+                maxLength="100"
+              />
+              <input
+                controlid="name"
+                className="input"
+                type="text"
+                placeholder="Nombre"
+                value={nameSignupRef}
+                onChange={handleName}
+                maxLength="100"
+                required
+              />
+              <input
+                controlid="lastName"
+                className="input"
+                type="text"
+                placeholder="Apellido"
+                value={lastNameSignupRef}
+                onChange={handleLastName}
+                maxLength="100"
+                required
+              />
+              <input
+                controlid="email"
+                className="input"
+                type="email"
+                placeholder="Correo Electronico"
+                id="Sign-Up-Email"
+                value={emailSignupRef}
+                onChange={handleEmail}
+                maxLength="100"
+                required
+              />
+              <input
+                controlid="password"
+                className="input"
+                type="password"
+                placeholder="Contraseña"
+                id="Sign-Up-Password"
+                value={passwordSignupRef}
+                onChange={handlePassword}
+                minLength="6"
+                required
+              />
               <button
                 className="button"
                 type="submit"
                 disabled={loading}
-                onClick={signupEvent}
               >
                 Crear
               </button>
-            </Link>
+            </form>
           </div>
         </div>
         <div className="form-container sign-in-container">
           <div className="form">
             <h1 className="h1">Inicio de Sesión</h1>
-            <input
-              className="input"
-              type="email"
-              placeholder="Correo Electronico"
-              value={email}
-              //ref={emailSignInRef}
-              onChange={hanldeEmailChange}
-              required
-            />
-            <input
-              className="input"
-              type="password"
-              placeholder="Contraseña"
-              value={password}
-              //ref={passwordSignInRef}
-              onChange={handlePasswordChange}
-              required
-            />
-            <button
-              className="button"
-              type="submit"
-              disabled={loading}
-              onClick={signInEvent}
-            >
-              Ingresar
-            </button>
+            <form onSubmit={signInEvent}>
+              <input
+                className="input"
+                type="email"
+                placeholder="Correo Electronico"
+                value={email}
+                //ref={emailSignInRef}
+                onChange={hanldeEmailChange}
+                required
+              />
+              <input
+                className="input"
+                type="password"
+                placeholder="Contraseña"
+                value={password}
+                //ref={passwordSignInRef}
+                onChange={handlePasswordChange}
+                required
+              />
+              <button
+                className="button"
+                type="submit"
+                disabled={loading}
+              >
+                Ingresar
+              </button>
+            </form>
           </div>
         </div>
         <div className="overlay-container">
