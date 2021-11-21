@@ -24,3 +24,36 @@
         }
     }
 }
+
+.userPage{
+    text-align: center;
+    align-self: center;
+    box-shadow: 0px 4px 16px #455B6364;
+    width: 80%;
+    margin-left: 10%;
+    margin-top: 50px;
+    border-radius: 12px;
+    .userInfo{
+        text-align: center;
+        .image{
+            margin-top: 10px;
+            width: 50%;
+            height: 300px;
+            border-radius: 60px;
+        }
+        .formUser{
+            padding-bottom: 20px;
+            margin-top: 10px;
+        }
+    }
+    .userProducts{
+        text-align: center;
+        .cardsContent{
+            height: 80%;
+        }
+        .addButton{
+            background-color: green;
+            margin-top: 30px;
+        }
+    }
+}
