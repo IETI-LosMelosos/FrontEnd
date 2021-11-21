@@ -5,10 +5,37 @@ import {CitySelect,MainPage,AboutUs} from './pages'
 import {PaymentResponse} from './paymentResponse'
 import {ShoopingCart} from './shoopingcart'
 import './resources/css/styles.css'
+import AppBar from '@mui/material/AppBar';
+import Box from '@mui/material/Box';
+import Toolbar from '@mui/material/Toolbar';
+import Typography from '@mui/material/Typography';
+import Button from '@mui/material/Button';
 
 function App() {
+
+  const loginbuttonClick = (event)=>{
+    event.preventDefault()
+    window.location.pathname="/login"
+  }
+
+  const homebuttonClick = (event)=>{
+    event.preventDefault()
+    window.location.pathname=""
+  }
+
   return (
     <Router>
+      <Box sx={{ flexGrow: 1 }}>
+        <AppBar position="static" >
+          <Toolbar sx={{backgroundColor: '#58ac47'}}>
+            <Typography variant="h6" component="span" sx={{ flexGrow: 1 }}>
+              E-sumerce
+            </Typography>
+            <Button color="inherit" onClick={loginbuttonClick}>Login</Button>
+            <Button color="inherit" onClick={homebuttonClick}>Home</Button>
+          </Toolbar>
+        </AppBar>
+      </Box>
       <Switch>
         <Route exact path="/citySelect">
           <CitySelect/>
