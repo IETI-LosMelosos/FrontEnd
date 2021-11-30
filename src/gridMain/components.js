@@ -5,7 +5,7 @@ function Square(props) {
 
   const handleClick = (event) => {
     event.preventDefault();
-    window.location.pathname= "/" + event.target.dataset.link
+    window.location.pathname= "/" + event.target.dataset.link;
   };
 
   return (
@@ -26,7 +26,7 @@ export function GridMain(props) {
       </div>
       <div className="MainGridRow">
         <div className="MainGridColumn">
-          <Square name="Sobre Nosotros" link ="sobreNosotros"/>
+          <Square name="Sobre Nosotros" link ="about"/>
           <Square name="Estadisticas" link ="estadisticas"/>
         </div>
       </div>
