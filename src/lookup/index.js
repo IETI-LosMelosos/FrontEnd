@@ -1,5 +1,6 @@
-import { ApiLookup } from "./components";
+import { ApiLookup,ShoopingCartStorage } from "./components";
 
 export{
-    ApiLookup
+    ApiLookup,
+    ShoopingCartStorage
 }
