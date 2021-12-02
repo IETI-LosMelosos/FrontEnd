@@ -2,10 +2,11 @@ import React, {useState,useEffect} from "react";
 import "./MainPage.css";
 import Card from "./Card";
 import "./card.css";
-import Header from "./Header";
+//import Header from "./Header";
 import PopUp from "./PopUp";
 import PopUp2 from "./PopUp2";
 import axios from 'axios';
+import { ShoopingCartStorage } from "../../lookup";
 
 const MainPage =  ( )  =>  {
 
@@ -23,13 +24,15 @@ const MainPage =  ( )  =>  {
     const [productName, setProductName] = useState([]);
     const [productPrice, setProductPrice] = useState([]);
     const [productDescription, setProductDescription] = useState([]);
+    const [productId,setProductId] = useState(-1)
+    const [value,setValue] = useState(1);
 
 
-    useEffect(() => {axios.get('http://localhost:8080/v1/product').then(result=>{setProducts(result.data)
+    useEffect(() => {axios.get('https://esumerce.herokuapp.com/v1/product').then(result=>{setProducts(result.data)
     }).catch(console.log);},[])
 
     const historiasBtn = obj => {
-        axios.get('http://localhost:8080/v1/product/'+ obj).then(result=>{setHistoriasImg(result.data.img_presentation);
+        axios.get('https://esumerce.herokuapp.com/v1/product/'+ obj).then(result=>{setHistoriasImg(result.data.img_presentation);
         setHistoriasProducedBy(result.data.producedBy);
         setHistoriasCity(result.data.city);
         setHistoriasPresentation(result.data.presentation);
@@ -39,7 +42,8 @@ const MainPage =  ( )  =>  {
     }
 
     const agregar_carrito = obj => {
-        axios.get('http://localhost:8080/v1/product/'+ obj).then(result=>{setProductImage(result.data.image);
+        axios.get('https://esumerce.herokuapp.com/v1/product/'+ obj).then(result=>{setProductImage(result.data.image);
+        setProductId(result.data.id);
         setProductName(result.data.name);
         setProductPrice(result.data.price);
         setProductDescription(result.data.description);
@@ -48,17 +52,24 @@ const MainPage =  ( )  =>  {
     }
 
     const cerrar = obj => {
-         setOpenPopUp(false);
-         setOpenPopUp2(false);
+        setOpenPopUp(false);
+        setOpenPopUp2(false);
     }
 
+    const addProduct = obj =>{
+        var cart = ShoopingCartStorage.getShoopingCart()
+        cart[productId]=value
+        ShoopingCartStorage.saveShoopingCart(cart)
+    }
+
+    const change = (event) =>{
+        event.preventDefault()
+        setValue(event.target.value)
+    }
+    
+
 return(
-<div>
-    <div className="row">
-        <div>
-            <Header/>
-        </div>
-    </div>
+    <div>
     <div className="row">
         <div className="container d-flex justify-content-center align-items-center h-100">
           <div className="row">
@@ -111,12 +122,12 @@ return(
                                 <br/><br/>
                                 <h3>{productDescription}</h3>
                                 <br/>
-                                <input type="number" pattern="^[0-9]" min="1" step="1"/>
+                                <input onChange={change} id="quantityProduct" type="number" pattern="^[0-9]" min="1" step="1"/>
                             </center>
                         </div>
                     </div>
                     <div className="row">
-                        <button className="shoppingCar2" onClick={() => cerrar()}>Agregar</button>
+                        <button className="shoppingCar2" onClick={() => addProduct()}>Agregar</button>
                         <br/><br/>
                         <button className="shoppingCar3" onClick={() => cerrar()}>Cerrar</button>
                     </div>

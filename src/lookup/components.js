@@ -67,6 +67,14 @@ export class ApiLookup {
 
     this.lookup("POST", "v1/auth", callback, data);
   }
+
+  static getProductById(id,callback){
+    this.lookup("GET",`v1/product/${id}`,callback)
+  }
+
+  static getAllProducts(callback){
+    this.lookup("GET","v1/product",callback)
+  }
 }
 
 
@@ -75,7 +83,7 @@ export class ShoopingCartStorage{
         if(localStorage.getItem('products')){
             return JSON.parse(localStorage.getItem('products'))
         }
-        return []
+        return {}
     }
 
     static saveShoopingCart(items){

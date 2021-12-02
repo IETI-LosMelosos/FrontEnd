@@ -23,9 +23,9 @@ export function CitySelect(props){
     <div>
         <h2>Desde que Ciudad Estas?</h2>
         <ul className='buttonList'>
-            <ButtonCity name= 'Bogota' link= 'bogota'/>
-            <ButtonCity name= 'Cali' link= 'cali'/>
-            <ButtonCity name= 'Medellin' link= 'medellin'/>
+            <ButtonCity name= 'Bogota' link= 'products'/>
+            <ButtonCity name= 'Cali' link= 'products'/>
+            <ButtonCity name= 'Medellin' link= 'products'/>
             <ButtonCity name= 'Home' link= ''/>
         </ul>
     </div>

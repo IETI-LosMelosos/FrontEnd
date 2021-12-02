@@ -24,6 +24,11 @@ function App() {
     window.location.pathname=""
   }
 
+  const shoopingCartClick = (event)=>{
+    event.preventDefault()
+    window.location.pathname="/shoopingcart"
+  }
+
   return (
     <Router>
       <Box sx={{ flexGrow: 1 }}>
@@ -32,6 +37,7 @@ function App() {
             <Typography variant="h6" component="span" sx={{ flexGrow: 1 }}>
               E-sumerce
             </Typography>
+            <Button color="inherit" onClick={shoopingCartClick}>Carrito</Button>
             <Button color="inherit" onClick={loginbuttonClick}>Login</Button>
             <Button color="inherit" onClick={homebuttonClick}>Home</Button>
           </Toolbar>
@@ -45,7 +51,7 @@ function App() {
         <Route exact path="/">
           <MainPage />
         </Route>
-        <Route exact path="/ttt" exact component={Main}/>
+        <Route exact path="/products" component={Main}/>
         <Route exact path="/paymentResponse">
           <PaymentResponse/>
         </Route>
