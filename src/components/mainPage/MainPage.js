@@ -77,10 +77,10 @@ return(
               <div className="col-md-2" key={id} height="10%" width="10%" >
                 <br/>
                 <Card imageSource={image} name={name} price={price} description={description} producedBy={producedBy} />
-                <div className="row">
-                    <button className="shoppingCar3" onClick={() => historiasBtn(id)}>Producido por</button>
-                    <br/>
-                    <button className="shoppingCar2" onClick={() => agregar_carrito(id)}>Agregar</button>
+                <div className="row" style={{textAlign:'center'}}>
+                    <div><button className="shoppingCar3" onClick={() => historiasBtn(id)}>Conoce tu campesino</button></div>
+                    
+                    <div><button className="shoppingCar2" onClick={() => agregar_carrito(id)}>Agregar</button></div>
                 </div>
 
                 {show && <PopUp details={selectedData} />}
@@ -122,14 +122,13 @@ return(
                                 <br/><br/>
                                 <h3>{productDescription}</h3>
                                 <br/>
-                                <input onChange={change} id="quantityProduct" type="number" pattern="^[0-9]" min="1" step="1"/>
+                                <input onChange={change} id="quantityProduct" placeholder="Cantidad" type="number" pattern="^[0-9]" min="1" step="1"/><span style={{marginLeft:'20px',fontSize:'15px'}}>Unidades Especificadas</span>
                             </center>
                         </div>
                     </div>
-                    <div className="row">
-                        <button className="shoppingCar2" onClick={() => addProduct()}>Agregar</button>
-                        <br/><br/>
-                        <button className="shoppingCar3" onClick={() => cerrar()}>Cerrar</button>
+                    <div className="row" style={{textAlign:'center'}}>
+                        <div><button className="shoppingCar2" onClick={() => addProduct()}>Agregar</button></div>
+                        <div><button className="shoppingCar3" onClick={() => cerrar()}>Cerrar</button></div>
                     </div>
                 </div>
                 </PopUp2>

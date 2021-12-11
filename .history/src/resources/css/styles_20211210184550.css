@@ -1,0 +1,42 @@
+.shoopingCart {
+  text-align: center;
+}
+
+.shoopingCart .totalPrice {
+  margin-top: 10px;
+}
+
+.shoopingCart .buyButton {
+  width: calc(100% - 20px);
+}
+
+.shoopingCart .card {
+  width: calc(100% - 20px);
+}
+
+.shoopingCart .card .seller {
+  display: inline-block;
+}
+
+.shoopingCart .card .quantity {
+  margin-left: 20px;
+  display: inline-block;
+}
+
+.shoopingCart .card .price {
+  margin-left: 20px;
+  display: inline-block;
+}
+
+.shoopingCart .card .delete {
+  margin-left: 20px;
+}
+
+.mainButton{
+  width: 70%;
+  background-color: green;
+  
+}
+
+.
+/*# sourceMappingURL=styles.css.map */
